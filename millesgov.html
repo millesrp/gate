@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مملكة الميلس - RP</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Cairo Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #0b0510;
+            --bg-card: rgba(22, 19, 13, 0.92);
+            --primary-main: #c084fc;
+            --primary-light: #f5d0fe;
+            --primary-bright: #e879f9;
+            --glow-color: rgba(192, 132, 252, 0.4);
+            --silver-main: #e2e8f0;
+            --silver-muted: #a3a3a3;
+            --border-color: rgba(192, 132, 252, 0.35);
+            --gradient-main: linear-gradient(135deg, #7e22ce 0%, #f5d0fe 25%, #9333ea 50%, #e879f9 75%, #581c87 100%);
+            --gradient-card: linear-gradient(145deg, rgba(28, 24, 16, 0.95) 0%, rgba(12, 10, 7, 0.98) 100%);
+            --ambient-1: #9333ea;
+            --ambient-2: #c084fc;
+        }
+
+        /* Ministry Dynamic Color Themes */
+        body.theme-finance {
+            --bg-deep: #0b0510;
+            --primary-main: #c084fc;
+            --primary-bright: #e879f9;
+            --primary-light: #f5d0fe;
+            --border-color: rgba(192, 132, 252, 0.35);
+            --glow-color: rgba(192, 132, 252, 0.4);
+            --gradient-main: linear-gradient(135deg, #7e22ce 0%, #f5d0fe 25%, #9333ea 50%, #e879f9 75%, #581c87 100%);
+            --ambient-1: #9333ea;
+            --ambient-2: #c084fc;
+        }
+
+        body.theme-interior {
+            --bg-deep: #050811;
+            --primary-main: #3b82f6;
+            --primary-bright: #60a5fa;
+            --primary-light: #93c5fd;
+            --border-color: rgba(59, 130, 246, 0.35);
+            --glow-color: rgba(59, 130, 246, 0.4);
+            --gradient-main: linear-gradient(135deg, #1d4ed8 0%, #93c5fd 25%, #2563eb 50%, #bfdbfe 75%, #1e40af 100%);
+            --ambient-1: #3b82f6;
+            --ambient-2: #1d4ed8;
+        }
+
+        body.theme-royal {
+            --bg-deep: #080705;
+            --primary-main: #d4af37;
+            --primary-bright: #ffd700;
+            --primary-light: #f3e5ab;
+            --border-color: rgba(212, 175, 55, 0.35);
+            --glow-color: rgba(212, 175, 55, 0.4);
+            --gradient-main: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            --ambient-1: #d4af37;
+            --ambient-2: #b38728;
+        }
+
+        body.theme-health {
+            --bg-deep: #050d08;
+            --primary-main: #10b981;
+            --primary-bright: #34d399;
+            --primary-light: #a7f3d0;
+            --border-color: rgba(16, 185, 129, 0.35);
+            --glow-color: rgba(16, 185, 129, 0.4);
+            --gradient-main: linear-gradient(135deg, #059669 0%, #ef4444 50%, #10b981 100%);
+            --ambient-1: #10b981;
+            --ambient-2: #ef4444;
+        }
+
+        body.theme-justice {
+            --bg-deep: #0a0907;
+            --primary-main: #d4b28c;
+            --primary-bright: #e6c5a0;
+            --primary-light: #f5efe6;
+            --border-color: rgba(212, 178, 140, 0.35);
+            --glow-color: rgba(212, 178, 140, 0.4);
+            --gradient-main: linear-gradient(135deg, #b8976f 0%, #f5efe6 25%, #c29b61 50%, #e6c5a0 75%, #9e7b52 100%);
+            --ambient-1: #d4b28c;
+            --ambient-2: #b8976f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--silver-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.5s ease;
+        }
+
+        .royal-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 20%, rgba(28, 24, 16, 0.3) 0%, var(--bg-deep) 70%, #030201 100%);
+            transition: background 0.5s ease;
+        }
+
+        .ambient-light {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.25;
+            animation: pulse-glow 12s infinite alternate ease-in-out;
+            transition: background 0.5s ease;
+        }
+
+        .light-1 { top: -10%; right: 15%; width: 600px; height: 600px; background: var(--ambient-1); }
+        .light-2 { bottom: -10%; left: 10%; width: 500px; height: 500px; background: var(--ambient-2); animation-delay: -6s; }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.15) translate(20px, -20px); opacity: 0.35; }
+            100% { transform: scale(0.9); opacity: 0.25; }
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Login Screen - Full Page (بدون مربعات أو حدود) */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-deep);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .login-card i.main-icon {
+            font-size: 4rem;
+            color: #5865F2;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(88, 101, 242, 0.5));
+        }
+
+        .login-card h2 {
+            font-size: 1.8rem;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .login-card p {
+            color: var(--silver-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 8, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.4s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 75px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            max-width: 70%;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--primary-bright);
+            filter: drop-shadow(0 0 10px var(--glow-color));
+            transition: color 0.4s ease;
+            flex-shrink: 0;
+        }
+
+        .brand-text {
+            overflow: hidden;
+        }
+
+        .brand-text h1 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .brand-text p {
+            font-size: 0.65rem;
+            color: var(--primary-light);
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* User Profile & Dropdown */
+        .user-menu-wrapper {
+            position: relative;
+        }
+
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile-badge:hover {
+            border-color: var(--primary-bright);
+            box-shadow: 0 0 12px var(--glow-color);
+        }
+
+        .user-profile-badge i {
+            color: #5865F2;
+            font-size: 1rem;
+        }
+
+        #user-display {
+            color: var(--primary-bright);
+            font-weight: 700;
+            font-size: 0.8rem;
+            max-width: 90px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: calc(100% + 8px);
+            background: var(--gradient-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            width: 160px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            z-index: 1100;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover { background: rgba(239, 68, 68, 0.3); }
+
+        /* Ministry Nav Tabs */
+        .ministry-nav {
+            background: rgba(15, 12, 8, 0.85);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+            backdrop-filter: blur(10px);
+            overflow-x: auto;
+        }
+
+        .ministry-tabs {
+            display: flex;
+            justify-content: flex-start;
+            gap: 8px;
+            list-style: none;
+            white-space: nowrap;
+            padding-bottom: 4px;
+        }
+
+        @media(min-width: 992px) {
+            .ministry-tabs {
+                justify-content: center;
+            }
+        }
+
+        .ministry-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--silver-muted);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .ministry-btn:hover {
+            border-color: var(--primary-bright);
+            color: #fff;
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        .ministry-btn.active {
+            background: var(--gradient-main);
+            color: #000;
+            font-weight: 900;
+            box-shadow: 0 0 20px var(--glow-color);
+            border-color: var(--primary-bright);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 25px 0 10px 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            color: var(--silver-muted);
+            font-size: 0.85rem;
+            padding: 0 10px;
+        }
+
+        /* Portal Card */
+        .portal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px 15px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            margin: 20px 0 40px 0;
+        }
+
+        @media(min-width: 768px) {
+            .portal-card {
+                padding: 35px;
+            }
+        }
+
+        .ministry-section {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .ministry-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Service Sub-tabs */
+        .service-tabs {
+            display: flex;
+            justify-content: flex-start;
+            gap: 6px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        @media(min-width: 992px) {
+            .service-tabs {
+                justify-content: center;
+                flex-wrap: wrap;
+                white-space: normal;
+            }
+        }
+
+        .sub-tab-btn {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            color: var(--silver-muted);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .sub-tab-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(239, 68, 68, 0.1) !important;
+            border-color: rgba(239, 68, 68, 0.3) !important;
+            color: #f87171 !important;
+        }
+
+        .sub-tab-btn.active {
+            border-color: var(--primary-bright);
+            color: #000;
+            background: var(--gradient-main);
+            font-weight: 800;
+        }
+
+        .sub-form { display: none; }
+        .sub-form.active { display: block; }
+
+        /* Form Controls */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .form-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .form-group.full-width { grid-column: span 2; }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(10, 8, 5, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: #ffffff;
+            font-size: 0.88rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-bright);
+            box-shadow: 0 0 12px var(--glow-color);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .file-upload-box {
+            border: 2px dashed var(--primary-main);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .file-upload-box:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .file-upload-box input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-preview {
+            margin-top: 5px;
+            font-size: 0.78rem;
+            color: var(--primary-bright);
+            font-weight: 700;
+        }
+
+        .submit-btn {
+            background: var(--gradient-main);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 0 20px var(--glow-color);
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--glow-color);
+        }
+
+        /* Success Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .modal-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--primary-bright);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            text-align: center;
+            color: var(--silver-muted);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body class="theme-finance">
+
+    <div class="royal-bg">
+        <div class="ambient-light light-1"></div>
+        <div class="ambient-light light-2"></div>
+    </div>
+
+    <!-- 0. LOGIN SCREEN (واجهة تسجيل الدخول كاملة الشاشة بدون مربعات) -->
+    <div id="login-screen">
+        <div class="login-card">
+            <i class="fab fa-discord main-icon"></i>
+            <h2>تسجيل الدخول بواسطة ديسكورد</h2>
+            <p>سجّل دخولك بحساب ديسكورد الخاص بك للوصول إلى كافة الخدمات الحكومية الرقمية</p>
+            <form onsubmit="handleDiscordLogin(event)">
+                <div class="form-group" style="margin-bottom: 15px; text-align: right;">
+                    <label><i class="fab fa-discord"></i> اسم المستخدم (Username)</label>
+                    <input type="text" id="login_username" class="form-control" placeholder="مثال: user#0000" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 25px; text-align: right;">
+                    <label><i class="fas fa-fingerprint"></i> آيدي الديسكورد (Discord ID)</label>
+                    <input type="text" id="login_discord_id" class="form-control" placeholder="أدخل الآيدي الرقمي" required>
+                </div>
+                <div class="server-stats">
+  <span>🟢 124 نشط</span>
+  <span>🟣 1014 عضو</span>
+</div>
+
+<style>
+.server-stats{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    background:#2b2d31;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    font-weight:600;
+}
+</style>
+<div class="verify-bar" id="verifyBar">
+    <div class="verify-circle"></div>
+    <span id="verifyText">هل قرأت القواعد؟</span>
+</div>
+
+<style>
+.verify-bar{
+    width:100%;
+    max-width:420px;
+    height:42px;
+    margin:8px auto;
+    padding:0 14px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    background:#161616;
+    border:1px solid rgba(114,65,211,.35);
+    border-radius:12px;
+
+    color:#ddd;
+    font-size:13px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.verify-bar:hover{
+    border-color:#7241d3;
+}
+
+.verify-circle{
+    width:18px;
+    height:18px;
+    border:2px solid #7241d3;
+    border-radius:5px;
+    transition:.25s;
+}
+
+.verify-bar.done .verify-circle{
+    background:#7241d3;
+    position:relative;
+}
+
+.verify-bar.done .verify-circle::after{
+    content:"☑";
+    position:absolute;
+    color:#fff;
+    font-size:12px;
+    left:3px;
+    top:-1px;
+}
+
+.verify-bar.done{
+    border-color:#7241d3;
+}
+
+.verify-bar.done span{
+    color:#fff;
+}
+</style>
+
+<script>
+const verifyBar=document.getElementById("verifyBar");
+const verifyText=document.getElementById("verifyText");
+
+let verified=false;
+
+verifyBar.onclick=()=>{
+
+if(verified) return;
+
+verifyText.textContent="لحظة من فضلك..";
+
+setTimeout(()=>{
+
+verifyBar.classList.add("done");
+verifyText.textContent="شكرا لتعاونك...";
+
+document.getElementById("loginBtn").disabled=false;
+
+verified=true;
+
+},1000);
+
+};
+</script>
+                <button type="submit" class="submit-btn" style="background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%); color: #fff;"><i class="fab fa-discord"></i> تسجيل الدخول عبر ديسكورد</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="app-wrapper" style="display: none;">
+        
+        <!-- Header & Brand -->
+        <header>
+            <div class="container navbar">
+                <a href="#" class="brand-logo">
+                    <i class="fas fa-crown logo-icon"></i>
+                    <div class="brand-text">
+                        <h1>مملكة الميلس</h1>
+                        <p>منصة الخدمات الحكومية الإلكترونية RP</p>
+                    </div>
+                </a>
+                
+                <!-- User Profile with Dropdown Menu -->
+                <div class="user-menu-wrapper">
+                    <div class="user-profile-badge" onclick="toggleUserDropdown()">
+                        <i class="fab fa-discord"></i>
+                        <span id="user-display">المستخدم</span>
+                        <i class="fas fa-chevron-down" style="font-size: 0.65rem; color: var(--silver-muted);"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-power-off"></i> تسجيل خروج</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Ministry Selector Navigation Bar -->
+        <div class="ministry-nav">
+            <div class="container">
+                <ul class="ministry-tabs">
+                    <button class="ministry-btn" onclick="switchMinistry('interior')"><i class="fas fa-shield-halved"></i> 🚔 وزارة الداخلية</button>
+                    <button class="ministry-btn active" onclick="switchMinistry('finance')"><i class="fas fa-building-columns"></i> 💰 وزارة المالية</button>
+                    <button class="ministry-btn" onclick="switchMinistry('royal')"><i class="fas fa-crown"></i> 👑 الديوان الملكي</button>
+                    <button class="ministry-btn" onclick="switchMinistry('health')"><i class="fas fa-notes-medical"></i> 🏥 وزارة الصحة</button>
+                    <button class="ministry-btn" onclick="switchMinistry('justice')"><i class="fas fa-scale-balanced"></i> ⚖️ وزارة العدل</button>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="quote-box">
+    <span id="quote"></span>
+</div>
+
+<style>
+.quote-box{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+    padding:12px 18px;
+    background:rgba(114,65,211,.08);
+    border:1px solid rgba(114,65,211,.35);
+    border-left:4px solid #7241d3;
+    border-radius:12px;
+    color:#fff;
+    text-align:center;
+    font-size:14px;
+    font-family:Arial;
+    backdrop-filter:blur(10px);
+}
+</style>
+
+<script>
+const quotes = [
+"العدالة أساس المملكة.",
+"النظام يصنع الاستقرار.",
+"الاحترام قبل الصلاحيات.",
+"القرار الحكيم يبني المستقبل.",
+"كل بلاغ يستحق المتابعة.",
+"الشفافية تعزز الثقة.",
+"أمن المملكة مسؤولية الجميع.",
+"القيادة تبدأ بالقدوة.",
+"القانون فوق الجميع.",
+"الخدمة العامة شرف ومسؤولية.",
+"كل إنجاز يبدأ بخطوة.",
+"التعاون أساس النجاح."
+];
+
+document.getElementById("quote").textContent =
+quotes[Math.floor(Math.random()*quotes.length)];
+</script>
+
+        <main class="container">
+            <section class="hero">
+                <h1 class="hero-title" id="ministry-title">💰 وزارة المالية</h1>
+                <p class="hero-subtitle" id="ministry-desc">القروض، التمويل، صرف المستحقات، السجلات التجارية والتقارير المالية.</p>
+            </section>
+
+            <div class="portal-card">
+
+                <!-- ================= 1. وزارة الداخلية ================= -->
+                <div class="ministry-section" id="sec-interior">
+                    <div class="service-tabs">
+                        <button class="sub-tab-btn active" onclick="switchSub('interior', 'id')">🪪 إصدار هوية</button>
+                        <button class="sub-tab-btn" onclick="switchSub('interior', 'weapon')">🔫 رخصة سلاح</button>
+                        <button class="sub-tab-btn" onclick="switchSub('interior', 'car')">🚙 تسجيل مركبة</button>
+                        <button class="sub-tab-btn" onclick="switchSub('interior', 'report')">🚨 تقديم بلاغ</button>
+                        <button class="sub-tab-btn" onclick="switchSub('interior', 'appt')">📅 حجز موعد</button>
+                        <button class="sub-tab-btn" onclick="switchSub('interior', 'fine')">🔍 الاستعلام عن المخالفات</button>
+                        <button class="sub-tab-btn" onclick="switchSub('interior', 'job')">📋 التوظيف</button>
+                    </div>
+
+                    <!-- 1.1 إصدار هوية -->
+                    <div class="sub-form active" id="interior-id">
+                        <form onsubmit="submitForm(event, '🚔 وزارة الداخلية', '🪪 إصدار هوية وطنية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الاسم الكامل</label><input type="text" name="الاسم الكامل" class="form-control" required></div>
+                                <div class="form-group"><label>تاريخ الميلاد</label><input type="date" name="تاريخ الميلاد" class="form-control" required></div>
+                                <div class="form-group full-width"><label>عنوان السكن / المدينة</label><input type="text" name="العنوان" class="form-control" required></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الصورة الشخصية / الهوية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> اضغط لرفع الصورة الشخصية أو الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إرسال طلب إصدار الهوية</button>
+                        </form>
+                    </div>
+
+                    <!-- 1.2 رخصة سلاح -->
+                    <div class="sub-form" id="interior-weapon">
+                        <form onsubmit="submitForm(event, '🚔 وزارة الداخلية', '🔫 طلب رخصة سلاح')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم طالب الرخصة</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>نوع السلاح المطلوب</label><input type="text" name="نوع السلاح" class="form-control" placeholder="مسدس / رشاش..." required></div>
+                                <div class="form-group full-width"><label>مبررات وسبب التخليص</label><textarea name="السبب" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق صورة الهوية / الفحص الطبي</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع إثبات الهوية والفحص</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب رخصة السلاح</button>
+                        </form>
+                    </div>
+
+                    <!-- 1.3 تسجيل مركبة -->
+                    <div class="sub-form" id="interior-car">
+                        <form onsubmit="submitForm(event, '🚔 وزارة الداخلية', '🚙 طلب تسجيل مركبة')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المالك</label><input type="text" name="اسم المالك" class="form-control" required></div>
+                                <div class="form-group"><label>نوع المركبة والموديل</label><input type="text" name="نوع المركبة" class="form-control" required></div>
+                                <div class="form-group"><label>رقم لوحة المركبة</label><input type="text" name="رقم اللوحة" class="form-control" required></div>
+                                <div class="form-group"><label>لون المركبة</label><input type="text" name="اللون" class="form-control" required></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق صك ملكية / عقد الشراء</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع وثائق الملكية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تسجيل المركبة رسمياً</button>
+                        </form>
+                    </div>
+
+                    <!-- 1.4 تقديم بلاغ -->
+                    <div class="sub-form" id="interior-report">
+                        <form onsubmit="submitForm(event, '🚔 وزارة الداخلية', '🚨 بلاغ أمني عادي/طوارئ')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المبلغ</label><input type="text" name="اسم المبلغ" class="form-control" required></div>
+                                <div class="form-group"><label>موقع الحادثة / الجريمة</label><input type="text" name="الموقع" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل البلاغ للأمن العام</label><textarea name="التفاصيل" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق أدلة / صور من الموقع</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صور الأدلة البلاغية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">رفع البلاغ للأمن العام</button>
+                        </form>
+                    </div>
+
+                    <!-- 1.5 حجز موعد -->
+                    <div class="sub-form" id="interior-appt">
+                        <form onsubmit="submitForm(event, '🚔 وزارة الداخلية', '📅 حجز موعد مراجعة أمنية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الاسم الكامل</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>القطاع المستهدف</label><input type="text" name="القطاع" placeholder="الأحوال / المرور / المرخصات" class="form-control" required></div>
+                                <div class="form-group"><label>التاريخ والوقت</label><input type="datetime-local" name="الموعد" class="form-control" required></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية الوطنية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تأكيد حجز الموعد</button>
+                        </form>
+                    </div>
+
+                    <!-- 1.6 استعلام مخالفات -->
+                    <div class="sub-form" id="interior-fine">
+                        <form onsubmit="submitForm(event, '🚔 وزارة الداخلية', '🔍 استعلام اعتراض على مخالفة')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>رقم الهوية / رقم المخالفة</label><input type="text" name="رقم المخالفة" class="form-control" required></div>
+                                <div class="form-group full-width"><label>سبب الاعتراض على المخالفة</label><textarea name="سبب الاعتراض" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق صورة المخالفة أو الإثبات</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع إثبات الاعتراض</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب اعتراض على المخالفة</button>
+                        </form>
+                    </div>
+
+                    <!-- 1.7 التوظيف -->
+                    <div class="sub-form" id="interior-job">
+                        <form onsubmit="submitForm(event, '🚔 وزارة الداخلية', '📋 تقديم على وظائف القطاعات الأمنية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الاسم الكامل</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>القطاع المطلوب</label><input type="text" name="القطاع المطلوب" placeholder="شرطة / مرور / طوارئ" class="form-control" required></div>
+                                <div class="form-group full-width"><label>المؤهلات والخبرات السابقة</label><textarea name="المؤهلات" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية والسيرة الذاتية CV</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية أو الـ CV</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب الالتحاق العسكري/الأمني</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ================= 2. وزارة المالية ================= -->
+                <div class="ministry-section active" id="sec-finance">
+                    <div class="service-tabs">
+                        <button class="sub-tab-btn active" onclick="switchSub('finance', 'fund')">💳 طلب تمويل</button>
+                        <button class="sub-tab-btn" onclick="switchSub('finance', 'loan')">🏦 طلب قرض</button>
+                        <button class="sub-tab-btn" onclick="switchSub('finance', 'pay')">🧾 طلب صرف مستحقات</button>
+                        <button class="sub-tab-btn disabled" onclick="alert('⛔ عذراً: الميزانية العامة مغلقة ومحمية حالياً ولا يمكنك فتحها!')">📈 الميزانية العامة 🔒</button>
+                        <button class="sub-tab-btn disabled" onclick="alert('⛔ عذراً: ميزانيات الوزارات مغلقة ومحمية حالياً ولا يمكنك فتحها!')">🏛️ ميزانيات الوزارات 🔒</button>
+                        <button class="sub-tab-btn disabled" onclick="alert('⛔ عذراً: طلبات زيادة الميزانية مقفلة حالياً بأمر ملكي!')">📋 طلب زيادة ميزانية 🔒</button>
+                        <button class="sub-tab-btn" onclick="switchSub('finance', 'proj')">🏪 ترخيص مشروع</button>
+                        <button class="sub-tab-btn" onclick="switchSub('finance', 'report')">📊 التقارير المالية</button>
+                        <button class="sub-tab-btn" onclick="switchSub('finance', 'job')">💼 التوظيف</button>
+                    </div>
+
+                    <!-- 2.1 طلب تمويل -->
+                    <div class="sub-form active" id="finance-fund">
+                        <form onsubmit="submitForm(event, '💰 وزارة المالية', '💳 طلب تمويل مالية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم طالب التمويل</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>المبلغ المطلوب ($)</label><input type="text" name="المبلغ" class="form-control" required></div>
+                                <div class="form-group full-width"><label>الغرض من التمويل</label><textarea name="الغرض" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية / دراسة الجدوى</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع الإثباتات والملفات</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب التمويل</button>
+                        </form>
+                    </div>
+
+                    <!-- 2.2 طلب قرض -->
+                    <div class="sub-form" id="finance-loan">
+                        <form onsubmit="submitForm(event, '💰 وزارة المالية', '🏦 طلب قرض حكومي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم القترض</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>قيمة القرض ($)</label><input type="text" name="قيمة القرض" class="form-control" required></div>
+                                <div class="form-group full-width"><label>خط سير ومبررات السداد</label><textarea name="المبررات" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية الوطنية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إرسال طلب القرض</button>
+                        </form>
+                    </div>
+
+                    <!-- 2.3 صرف مستحقات -->
+                    <div class="sub-form" id="finance-pay">
+                        <form onsubmit="submitForm(event, '💰 وزارة المالية', '🧾 طلب صرف مستحقات مالية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المستفيد / الشركة</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>قيمة المستحقات ($)</label><input type="text" name="المبلغ" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل وبيانات العقد أو الفاتورة</label><textarea name="التفاصيل" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق العقود / الفواتير الرسمية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع الفواتير أو العقد</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">رفع طلب الصرف</button>
+                        </form>
+                    </div>
+
+                    <!-- 2.4 ترخيص مشروع -->
+                    <div class="sub-form" id="finance-proj">
+                        <form onsubmit="submitForm(event, '💰 وزارة المالية', '🏪 طلب ترخيص مشروع تجاري')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم مالك المشروع</label><input type="text" name="المالك" class="form-control" required></div>
+                                <div class="form-group"><label>اسم النشاط التجاري</label><input type="text" name="اسم النشاط" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل ونوع المشروع</label><textarea name="تفاصيل النشاط" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية وسند الملكية/الإيجار</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع المستندات المرفقة</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إصدار ترخيص المشروع</button>
+                        </form>
+                    </div>
+
+                    <!-- 2.5 التقارير المالية -->
+                    <div class="sub-form" id="finance-report">
+                        <form onsubmit="submitForm(event, '💰 وزارة المالية', '📊 تقديم تقرير مالي رسمي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المسؤول المالي</label><input type="text" name="المسؤول" class="form-control" required></div>
+                                <div class="form-group"><label>القطاع / الوزارة</label><input type="text" name="الجهة" class="form-control" required></div>
+                                <div class="form-group full-width"><label>ملخص التقرير المالي والإيرادات</label><textarea name="ملخص التقرير" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق ملف التقرير المالي كامل</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة التقرير المالي</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إرسال التقرير للمالية</button>
+                        </form>
+                    </div>
+
+                    <!-- 2.6 التوظيف -->
+                    <div class="sub-form" id="finance-job">
+                        <form onsubmit="submitForm(event, '💰 وزارة المالية', '💼 تقديم على وظائف وزارة المالية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الاسم الرباعي</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>التخصص (محاسبة/إدارة...)</label><input type="text" name="التخصص" class="form-control" required></div>
+                                <div class="form-group full-width"><label>الخبرات السابقة</label><textarea name="الخبرات" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية والسيرة الذاتية CV</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية أو الـ CV</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب الوظيفة</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ================= 3. الديوان الملكي ================= -->
+                <div class="ministry-section" id="sec-royal">
+                    <div class="service-tabs">
+                        <button class="sub-tab-btn active" onclick="switchSub('royal', 'grv')">📝 تقديم تظلم</button>
+                        <button class="sub-tab-btn" onclick="switchSub('royal', 'pdn')">📜 طلب عفو ملكي</button>
+                        <button class="sub-tab-btn" onclick="switchSub('royal', 'meet')">👑 طلب مقابلة</button>
+                        <button class="sub-tab-btn" onclick="switchSub('royal', 'ord')">📢 الأوامر الملكية</button>
+                        <button class="sub-tab-btn" onclick="switchSub('royal', 'dec')">📑 المراسيم الملكية</button>
+                        <button class="sub-tab-btn" onclick="switchSub('royal', 'prj')">📋 اعتماد مشروع</button>
+                        <button class="sub-tab-btn" onclick="switchSub('royal', 'bdg')">💰 اعتماد ميزانية</button>
+                        <button class="sub-tab-btn" onclick="switchSub('royal', 'mail')">📬 المراسلات</button>
+                    </div>
+
+                    <!-- 3.1 تقديم تظلم -->
+                    <div class="sub-form active" id="royal-grv">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '📝 تقديم تظلم سامي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المتظلم</label><input type="text" name="اسم المتظلم" class="form-control" required></div>
+                                <div class="form-group"><label>الجهة المشتكى عليها</label><input type="text" name="الجهة المشتكى عليها" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل التظلم والأسباب</label><textarea name="التفاصيل" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق أدلة التظلم أو الهوية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع أدلة ومستندات التظلم</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">رفع التظلم للمقام السامي</button>
+                        </form>
+                    </div>
+
+                    <!-- 3.2 عفو ملكي -->
+                    <div class="sub-form" id="royal-pdn">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '📜 طلب عفو ملكي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم طالب العفو / السجين</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>التهمة / القضية</label><input type="text" name="القضية" class="form-control" required></div>
+                                <div class="form-group full-width"><label>خطاب ومبررات الاسترحام</label><textarea name="خطاب الاسترحام" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية / صك الحكم</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع الهوية أو الحكم</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">رفع طلب العفو السامي</button>
+                        </form>
+                    </div>
+
+                    <!-- 3.3 طلب مقابلة -->
+                    <div class="sub-form" id="royal-meet">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '👑 طلب مقابلة ملكية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم طالب المقابلة</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>المقابلة مع</label><input type="text" name="المقابلة مع" placeholder="جلالة الملك / ولي العهد / رئيس الوزراء" class="form-control" required></div>
+                                <div class="form-group full-width"><label>سبب وأجندة المقابلة</label><textarea name="الأجندة" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية الوطنية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب المقابلة</button>
+                        </form>
+                    </div>
+
+                    <!-- 3.4 أمر ملكي -->
+                    <div class="sub-form" id="royal-ord">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '📢 توثيق أمر ملكي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>عنوان الأمر الملكي</label><input type="text" name="العنوان" class="form-control" required></div>
+                                <div class="form-group"><label>الجهة المعنية</label><input type="text" name="الجهة" class="form-control" required></div>
+                                <div class="form-group full-width"><label>نص الأمر الملكي كاملاً</label><textarea name="نص الأمر" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الشعار أو التوقيع</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع المرفقات والختم الرسمية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إصدار وتوثيق الأمر الملكي</button>
+                        </form>
+                    </div>
+
+                    <!-- 3.5 مرسوم ملكي -->
+                    <div class="sub-form" id="royal-dec">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '📑 اعتماد مرسوم ملكي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>عنوان المرسوم</label><input type="text" name="عنوان المرسوم" class="form-control" required></div>
+                                <div class="form-group"><label>النظام المعدل</label><input type="text" name="النظام" class="form-control" required></div>
+                                <div class="form-group full-width"><label>نص المرسوم الملكي</label><textarea name="نص المرسوم" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق وثيقة المرسوم</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الوثيقة</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">اعتماد المرسوم</button>
+                        </form>
+                    </div>
+
+                    <!-- 3.6 اعتماد مشروع -->
+                    <div class="sub-form" id="royal-prj">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '📋 اعتماد مشروع وطني')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المشروع</label><input type="text" name="اسم المشروع" class="form-control" required></div>
+                                <div class="form-group"><label>الجهة المتقدمة</label><input type="text" name="الجهة" class="form-control" required></div>
+                                <div class="form-group full-width"><label>أهداف وأهمية المشروع</label><textarea name="الأهداف" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق المخطط الهيكلي للمشروع</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع ملف المخططات</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب اعتماد المشروع</button>
+                        </form>
+                    </div>
+
+                    <!-- 3.7 اعتماد ميزانية -->
+                    <div class="sub-form" id="royal-bdg">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '💰 اعتماد ميزانية قطاع')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الجهة طالبة الميزانية</label><input type="text" name="الجهة" class="form-control" required></div>
+                                <div class="form-group"><label>المبلغ المطلوب ($)</label><input type="text" name="المبلغ" class="form-control" required></div>
+                                <div class="form-group full-width"><label>بيان أوجه الصرف والتفاصيل</label><textarea name="بيان الصرف" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الخطاب والبيان المالي</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة البيان المالي</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">رفع طلب اعتماد الميزانية</button>
+                        </form>
+                    </div>
+
+                    <!-- 3.8 المراسلات -->
+                    <div class="sub-form" id="royal-mail">
+                        <form onsubmit="submitForm(event, '👑 الديوان الملكي', '📬 مراسلة رسمية صادرة')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المرسل / الجهة</label><input type="text" name="المرسل" class="form-control" required></div>
+                                <div class="form-group"><label>موضوع المراسلة</label><input type="text" name="الموضوع" class="form-control" required></div>
+                                <div class="form-group full-width"><label>فحوى الخطاب الموجه للديوان</label><textarea name="نص الخطاب" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الخطاب الرسمي الموّثق</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الخطاب المرفق</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إرسال الخطاب للديوان</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ================= 4. وزارة الصحة ================= -->
+                <div class="ministry-section" id="sec-health">
+                    <div class="service-tabs">
+                        <button class="sub-tab-btn active" onclick="switchSub('health', 'appt')">🩺 حجز موعد</button>
+                        <button class="sub-tab-btn" onclick="switchSub('health', 'med')">💊 طلب علاج</button>
+                        <button class="sub-tab-btn" onclick="switchSub('health', 'rep')">📋 تقرير طبي</button>
+                        <button class="sub-tab-btn" onclick="switchSub('health', 'chk')">❤️ فحص طبي</button>
+                        <button class="sub-tab-btn" onclick="switchSub('health', 'bld')">🩸 التبرع بالدم</button>
+                        <button class="sub-tab-btn" onclick="switchSub('health', 'fac')">🏥 ترخيص منشأة</button>
+                        <button class="sub-tab-btn" onclick="switchSub('health', 'rec')">📊 الملف الطبي</button>
+                        <button class="sub-tab-btn" onclick="switchSub('health', 'job')">💼 التوظيف</button>
+                    </div>
+
+                    <!-- 4.1 حجز موعد -->
+                    <div class="sub-form active" id="health-appt">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '🩺 حجز موعد عيادات/طوارئ')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المريض</label><input type="text" name="المريض" class="form-control" required></div>
+                                <div class="form-group"><label>العيادة / العيادة العامة</label><input type="text" name="العيادة" class="form-control" required></div>
+                                <div class="form-group full-width"><label>الأعراض والسبب</label><textarea name="الأعراض" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية الوطنية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تأكيد حجز الموعد الطبي</button>
+                        </form>
+                    </div>
+
+                    <!-- 4.2 طلب علاج -->
+                    <div class="sub-form" id="health-med">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '💊 طلب صرف علاج/دواء')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المريض</label><input type="text" name="المريض" class="form-control" required></div>
+                                <div class="form-group"><label>اسم الدواء / الوصفة</label><input type="text" name="الدواء" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل الحالة الصحية</label><textarea name="الحالة الصحية" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الروشتة أو الوصفة الطبية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الوصفة الطبية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب صرف العلاج</button>
+                        </form>
+                    </div>
+
+                    <!-- 4.3 تقرير طبي -->
+                    <div class="sub-form" id="health-rep">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '📋 طلب إصدار تقرير طبي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المريض</label><input type="text" name="المريض" class="form-control" required></div>
+                                <div class="form-group"><label>غرض التقرير (إجازة/قيادة...)</label><input type="text" name="الغرض" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل الحالة الطبية المطلوبة</label><textarea name="التفاصيل" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إصدار التقرير الطبي</button>
+                        </form>
+                    </div>
+
+                    <!-- 4.4 فحص طبي -->
+                    <div class="sub-form" id="health-chk">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '❤️ طلب فحص طبي شامل/توظيف')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الاسم الكامل</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>نوع الفحص (قبل الزواج/توظيف/قيادة)</label><input type="text" name="نوع الفحص" class="form-control" required></div>
+                                <div class="form-group full-width"><label>ملاحظات وسجل الأمراض إن وجد</label><textarea name="السجل الطبي" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">طلب الموعد والفحص</button>
+                        </form>
+                    </div>
+
+                    <!-- 4.5 التبرع بالدم -->
+                    <div class="sub-form" id="health-bld">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '🩸 تسجيل تبرع بالدم')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المتبرع</label><input type="text" name="المتبرع" class="form-control" required></div>
+                                <div class="form-group"><label>فصيلة الدم</label><input type="text" name="فصيلة الدم" placeholder="O+ / A- / B+..." class="form-control" required></div>
+                                <div class="form-group full-width"><label>هل تعاني من أي أمراض مزمنة؟</label><textarea name="الحالة" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية الوطنية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تسجيل كمتبرع بالدم</button>
+                        </form>
+                    </div>
+
+                    <!-- 4.6 ترخيص منشأة -->
+                    <div class="sub-form" id="health-fac">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '🏥 طلب ترخيص منشأة طبية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم صاحب المنشأة</label><input type="text" name="المالك" class="form-control" required></div>
+                                <div class="form-group"><label>نوع المنشأة (مستشفى/عيادة/صيدلية)</label><input type="text" name="نوع المنشأة" class="form-control" required></div>
+                                <div class="form-group full-width"><label>عنوان وتفاصيل المنشأة</label><textarea name="التفاصيل" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق مخطط ومستندات المنشأة</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع المستندات الرسمية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إصدار الترخيص الطبي</button>
+                        </form>
+                    </div>
+
+                    <!-- 4.7 الملف الطبي -->
+                    <div class="sub-form" id="health-rec">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '📊 فتح / تحديث ملف طبي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المريض</label><input type="text" name="المريض" class="form-control" required></div>
+                                <div class="form-group"><label>رقم الهوية</label><input type="text" name="رقم الهوية" class="form-control" required></div>
+                                <div class="form-group full-width"><label>التاريخ المرضي والحساسية من الأدوية</label><textarea name="السجل المرضي" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية / ملف سابق</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">فتح / تحديث الملف الطبي</button>
+                        </form>
+                    </div>
+
+                    <!-- 4.8 التوظيف الصحي -->
+                    <div class="sub-form" id="health-job">
+                        <form onsubmit="submitForm(event, '🏥 وزارة الصحة', '💼 التقديم على الوظائف الصحية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الاسم الكامل</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>التخصص (طبيب/تمريض/صيدلي)</label><input type="text" name="التخصص" class="form-control" required></div>
+                                <div class="form-group full-width"><label>المؤهلات وسنوات الخبرة</label><textarea name="الخبرة" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية والسيرة الذاتية CV</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية أو الـ CV</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب الوظيفة الصحية</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ================= 5. وزارة العدل ================= -->
+                <div class="ministry-section" id="sec-justice">
+                    <div class="service-tabs">
+                        <button class="sub-tab-btn active" onclick="switchSub('justice', 'case')">📄 رفع دعوى</button>
+                        <button class="sub-tab-btn" onclick="switchSub('justice', 'appt')">📅 حجز جلسة</button>
+                        <button class="sub-tab-btn" onclick="switchSub('justice', 'qur')">📂 الاستعلام عن قضية</button>
+                        <button class="sub-tab-btn" onclick="switchSub('justice', 'cmp')">📝 تقديم شكوى</button>
+                        <button class="sub-tab-btn" onclick="switchSub('justice', 'app')">🤝 طلب استئناف</button>
+                        <button class="sub-tab-btn" onclick="switchSub('justice', 'job')">💼 التوظيف</button>
+                    </div>
+
+                    <!-- 5.1 رفع دعوى -->
+                    <div class="sub-form active" id="justice-case">
+                        <form onsubmit="submitForm(event, '⚖️ وزارة العدل', '📄 رفع دعوى قضائية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم المدعي</label><input type="text" name="المدعي" class="form-control" required></div>
+                                <div class="form-group"><label>اسم المدعى عليه</label><input type="text" name="المدعى عليه" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل الدعوى والمطالبات</label><textarea name="تفاصيل القضية" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الأدلة والوثائق الشرعية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية والأدلة</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">رفع الدعوى المحكمة</button>
+                        </form>
+                    </div>
+
+                    <!-- 5.2 حجز جلسة -->
+                    <div class="sub-form" id="justice-appt">
+                        <form onsubmit="submitForm(event, '⚖️ وزارة العدل', '📅 حجز جلسة محاكمة')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>رقم القضية</label><input type="text" name="رقم القضية" class="form-control" required></div>
+                                <div class="form-group"><label>المحكمة المستهدفة</label><input type="text" name="المحكمة" class="form-control" required></div>
+                                <div class="form-group full-width"><label>سبب حجز/تعجيل الجلسة</label><textarea name="السبب" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق صك القضية / الهوية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الإثبات</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تأكيد حجز الجلسة</button>
+                        </form>
+                    </div>
+
+                    <!-- 5.3 الاستعلام عن قضية -->
+                    <div class="sub-form" id="justice-qur">
+                        <form onsubmit="submitForm(event, '⚖️ وزارة العدل', '📂 طلب استعلام عن تفاصيل قضية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>رقم القضية / الصك</label><input type="text" name="رقم القضية" class="form-control" required></div>
+                                <div class="form-group"><label>اسم صاحب الطلب</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group full-width"><label>سبب الاستعلام والملاحظات</label><textarea name="الملاحظات" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق صورة الهوية الوطنية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">إرسال طلب الاستعلام</button>
+                        </form>
+                    </div>
+
+                    <!-- 5.4 تقديم شكوى -->
+                    <div class="sub-form" id="justice-cmp">
+                        <form onsubmit="submitForm(event, '⚖️ وزارة العدل', '📝 تقديم شكوى ضد منشأة عدلية/محامي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>اسم الشاكي</label><input type="text" name="الشاكي" class="form-control" required></div>
+                                <div class="form-group"><label>الجهة/الشخص المشكو بحقه</label><input type="text" name="المشكو بحقه" class="form-control" required></div>
+                                <div class="form-group full-width"><label>تفاصيل الشكوى والأسباب</label><textarea name="تفاصيل الشكوى" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق إثباتات الشكوى والهوية</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع الأدلة والمرفقات</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">رفع الشكوى للتفتيش القضائي</button>
+                        </form>
+                    </div>
+
+                    <!-- 5.5 طلب استئناف -->
+                    <div class="sub-form" id="justice-app">
+                        <form onsubmit="submitForm(event, '⚖️ وزارة العدل', '🤝 طلب استئناف حكم قضائي')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>رقم صك الحكم الصادر</label><input type="text" name="رقم الحكم" class="form-control" required></div>
+                                <div class="form-group"><label>اسم المستأنِف</label><input type="text" name="المستأنف" class="form-control" required></div>
+                                <div class="form-group full-width"><label>أسباب الاعتراض والتمس الاستئناف</label><textarea name="أسباب الاعتراض" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق صك الحكم الابتدائي</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة صك الحكم</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم اعتراض الاستئناف</button>
+                        </form>
+                    </div>
+
+                    <!-- 5.6 التوظيف -->
+                    <div class="sub-form" id="justice-job">
+                        <form onsubmit="submitForm(event, '⚖️ وزارة العدل', '💼 التقديم على الوظائف العدلية والقضائية')">
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label><i class="fab fa-discord"></i> آيدي الديسكورد</label><input type="text" name="Discord ID" class="form-control discord-input-auto" required></div>
+                                <div class="form-group"><label>الاسم الكامل</label><input type="text" name="الاسم" class="form-control" required></div>
+                                <div class="form-group"><label>المؤهل (شريعة / قانون)</label><input type="text" name="المؤهل" class="form-control" required></div>
+                                <div class="form-group full-width"><label>الخبرات السابقة في السلك العدلي</label><textarea name="الخبرات" class="form-control" required></textarea></div>
+                                <div class="form-group full-width">
+                                    <label>إرفاق الهوية والسيرة الذاتية CV</label>
+                                    <div class="file-upload-box" onclick="this.querySelector('input').click()">
+                                        <p><i class="fas fa-cloud-arrow-up"></i> رفع صورة الهوية أو الـ CV</p>
+                                        <input type="file" name="المرفقات" accept="image/*" onchange="previewFile(this)">
+                                        <div class="file-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">تقديم طلب الوظيفة العدلية</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Success Modal -->
+        <div class="modal-overlay" id="successModal">
+            <div class="modal-card">
+                <i class="fas fa-circle-check" style="font-size: 3rem; color: #10b981; margin-bottom: 15px;"></i>
+                <h3 style="color: var(--primary-bright); margin-bottom: 10px; font-size: 1.2rem;">تم رفع معاملتك بنجاح!</h3>
+                <p style="color: var(--silver-muted); margin-bottom: 20px; font-size: 0.85rem;">تم استلام طلبك في المنصة وإرساله للوزارة المعنية عبر الويب هوك الرسمي، وسنتواصل معك عبر الديسكورد.</p>
+                <button onclick="closeModal()" class="submit-btn">تم / إغلاق</button>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <p>جميع الحقوق محفوظة © مملكة الميلس للخدمات الحكومية (RP)</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript Execution -->
+    <script>
+        // روابط الويبهوك الخاصة بكل وزارة وبنظام الأمان وتسجيل الدخول بشكل منفصل تماماً
+        const LOGIN_WEBHOOK = "https://discord.com/api/webhooks/1529525436181385348/Mit3G6RVTx3TNvW0I258HhqNaltU6jgiStZTthkMVBdHONHc5wi7h50ipaSZYbKYRNJc";
+
+        const MINISTRY_WEBHOOKS = {
+            interior: "https://discord.com/api/webhooks/1529513036677910559/S3GwaeYgVZvjKGTNH1RLojv756zSwHuq8HA17AfXzw-yAEkHzVzwaOZAOSJvb7OFfE07",
+            justice: "https://discord.com/api/webhooks/1529533603523068025/5-JLQBnGq2S4W_mmIZtnw29pWoFYWjB_8T08zycQ4LQTzgF1xQxgN49eYzMyOXa5A-vE",
+            health: "https://discord.com/api/webhooks/1529533774994477207/lSK6gkDnDMCPFC_RME3YfZa4q5MhyfDhYco0YsRR0TNeUt8xm2HQGK4bfdgvjxXgUqlB",
+            finance: "https://discord.com/api/webhooks/1529533991097598063/0mn2R3ZuCvdN98YwDYlAuyTXpIy796Uy5gxbNPsbR7jhys-VUIQdN53CAWM1K4Od7gLf",
+            royal: "https://discord.com/api/webhooks/1529534111125864489/DIcjuS6pcCD9jiIEP_gsc-LXL1QcrhRsaBiLCAJFu57QxY02Uuqosodb_pl49dJrGB30"
+        };
+
+        const TITLES = {
+            interior: { title: "🚔 وزارة الداخلية", desc: "خدمات الأحوال المدنية، الهويات، تراخيص الأسلحة، البلاغات الأمنية، والتوظيف.", theme: "theme-interior", color: 0x3b82f6 },
+            finance: { title: "💰 وزارة المالية", desc: "القروض، التمويل، صرف المستحقات، السجلات التجارية والتقارير المالية.", theme: "theme-finance", color: 0xc084fc },
+            royal: { title: "👑 الديوان الملكي ورئاسة الوزراء", desc: "تقديم التظلمات، المراسلات السامية، الأوامر الملكية والمراسيم واعتماد الميزانيات.", theme: "theme-royal", color: 0xd4af37 },
+            health: { title: "🏥 وزارة الصحة", desc: "المواعيد، صرف العلاج، التقارير الطبية، الفحص الشامل وتراخيص المنشآت.", theme: "theme-health", color: 0x10b981 },
+            justice: { title: "⚖️ وزارة العدل", desc: "رفع الدعوى، الاستعلام القضائي، استئناف الأحكام، وتوثيق الشكاوى والتوظيف.", theme: "theme-justice", color: 0xd4b28c }
+        };
+
+        let currentDiscordId = "";
+        let currentUsername = "";
+        let currentMinistry = "finance";
+
+        // Toggle User Profile Dropdown Menu
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.user-menu-wrapper')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown && dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        };
+
+        // جمع معلومات الزائر والسيرفر التفصيلية لتسجيل الدخول
+        async function getClientMetadata() {
+            let userIp = "غير معروف";
+            let location = "غير معروف";
+            
+            try {
+                const ipRes = await fetch('https://ipapi.co/json/');
+                const ipData = await ipRes.json();
+                if(ipData.ip) userIp = ipData.ip;
+                if(ipData.city && ipData.country_name) {
+                    location = `${ipData.city}, ${ipData.country_name}`;
+                } else if(ipData.country_name) {
+                    location = ipData.country_name;
+                }
+            } catch (err) {
+                try {
+                    const fallbackRes = await fetch('https://api.ipify.org?format=json');
+                    const fallbackData = await fallbackRes.json();
+                    userIp = fallbackData.ip;
+                } catch(e) {}
+            }
+
+            const ua = navigator.userAgent;
+            let browser = "غير معروف";
+            if (ua.includes("Firefox")) browser = "Firefox";
+            else if (ua.includes("SamsungBrowser")) browser = "Samsung Internet";
+            else if (ua.includes("Opera") || ua.includes("OPR")) browser = "Opera";
+            else if (ua.includes("Edge")) browser = "Microsoft Edge";
+            else if (ua.includes("Chrome")) browser = "Google Chrome";
+            else if (ua.includes("Safari")) browser = "Apple Safari";
+
+            let os = "غير معروف";
+            if (ua.includes("Win")) os = "Windows";
+            else if (ua.includes("Android")) os = "Android";
+            else if (ua.includes("like Mac")) os = "iOS (iPhone/iPad)";
+            else if (ua.includes("Mac")) os = "macOS";
+            else if (ua.includes("Linux")) os = "Linux";
+
+            let device = "كمبيوتر (Desktop)";
+            if (/Mobi|Android|iPhone/i.test(ua)) device = "هاتف محمول (Mobile)";
+            else if (/Tablet|iPad/i.test(ua)) device = "تابلت (Tablet)";
+
+            const lang = navigator.language || "غير معروفة";
+            const screenRes = `${window.screen.width} × ${window.screen.height}`;
+            const timestamp = new Date().toLocaleString('ar-SA');
+            const requestId = "REQ-" + Math.floor(100000 + Math.random() * 900000);
+
+            const attemptsKey = `attempts_${userIp}`;
+            let attempts = parseInt(localStorage.getItem(attemptsKey) || "0") + 1;
+            localStorage.setItem(attemptsKey, attempts);
+
+            const historyKey = `history_${currentDiscordId || 'guest'}`;
+            let history = JSON.parse(localStorage.getItem(historyKey) || "[]");
+            const currentReqSummary = `${timestamp} - ${requestId}`;
+            history.push(currentReqSummary);
+            if(history.length > 10) history.shift();
+            localStorage.setItem(historyKey, JSON.stringify(history));
+
+            return {
+                ip: userIp,
+                location: location,
+                browser: browser,
+                os: os,
+                device: device,
+                lang: lang,
+                screen: screenRes,
+                timestamp: timestamp,
+                requestId: requestId,
+                attempts: attempts,
+                previousRequests: history.slice(0, -1).join('\n') || "لا توجد طلبات سابقة"
+            };
+        }
+
+        // Discord Login Handler & Security Webhook
+        async function handleDiscordLogin(e) {
+            e.preventDefault();
+            currentUsername = document.getElementById('login_username').value;
+            currentDiscordId = document.getElementById('login_discord_id').value;
+
+            document.getElementById('user-display').innerText = currentUsername;
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app-wrapper').style.display = 'block';
+
+            document.querySelectorAll('.discord-input-auto').forEach(input => {
+                input.value = currentDiscordId;
+            });
+
+            const meta = await getClientMetadata();
+
+            const embed = {
+                title: "🔐 تسجيل دخول جديد لمملكة الميلس",
+                color: 0x5865F2,
+                fields: [
+                    { name: "اسم المستخدم", value: currentUsername, inline: true },
+                    { name: "آيدي الديسكورد", value: currentDiscordId, inline: true },
+                    { name: "🌐 عنوان الـ IP", value: meta.ip, inline: true },
+                    { name: "🌍 الدولة / المدينة", value: meta.location, inline: true },
+                    { name: "🕒 وقت وتاريخ الدخول", value: meta.timestamp, inline: true },
+                    { name: "🖥️ نوع المتصفح", value: meta.browser, inline: true },
+                    { name: "📱 نوع الجهاز", value: meta.device, inline: true },
+                    { name: "💻 نظام التشغيل", value: meta.os, inline: true },
+                    { name: "🌐 لغة المتصفح", value: meta.lang, inline: true },
+                    { name: "📏 دقة الشاشة", value: meta.screen, inline: true },
+                    { name: "🚦 عدد محاولات الـ IP", value: `${meta.attempts} محاولة`, inline: true }
+                ],
+                footer: { text: "نظام التحقق عبر ديسكورد - مملكة الميلس RP" }
+            };
+
+            const payload = {
+                username: "نظام الأمان والتحقق",
+                avatar_url: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png",
+                content: `🔔 **تم تسجيل دخول مستخدم جديد إلى المنصة**`,
+                embeds: [embed]
+            };
+
+            try {
+                await fetch(LOGIN_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.error("Webhook login log error:", err);
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('app-wrapper').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('login_username').value = '';
+            document.getElementById('login_discord_id').value = '';
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+
+        function switchMinistry(minKey) {
+            currentMinistry = minKey;
+            
+            document.body.className = TITLES[minKey].theme;
+
+            document.querySelectorAll('.ministry-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.ministry-section').forEach(s => s.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            document.getElementById('sec-' + minKey).classList.add('active');
+
+            document.getElementById('ministry-title').innerText = TITLES[minKey].title;
+            document.getElementById('ministry-desc').innerText = TITLES[minKey].desc;
+
+            document.querySelectorAll('.discord-input-auto').forEach(input => {
+                if(currentDiscordId) input.value = currentDiscordId;
+            });
+        }
+
+        function switchSub(minKey, subKey) {
+            const sec = document.getElementById('sec-' + minKey);
+            sec.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+            sec.querySelectorAll('.sub-form').forEach(f => f.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            document.getElementById(minKey + '-' + subKey).classList.add('active');
+            
+            document.querySelectorAll('.discord-input-auto').forEach(input => {
+                if(currentDiscordId) input.value = currentDiscordId;
+            });
+        }
+
+        function previewFile(input) {
+            const box = input.parentElement;
+            const preview = box.querySelector('.file-preview');
+            if (input.files && input.files[0]) {
+                preview.innerHTML = `<i class="fas fa-check-circle"></i> تم إرفاق: ${input.files[0].name}`;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        async function submitForm(e, ministryName, serviceName) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.innerText;
+
+            submitBtn.innerText = "جاري رفع المعاملة للنظام...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData();
+            let fields = [];
+            let fileInput = form.querySelector('input[type="file"]');
+
+            const inputs = form.querySelectorAll('input:not([type="file"]), textarea, select');
+            inputs.forEach(input => {
+                fields.push({
+                    name: input.name || "الحقل",
+                    value: input.value || "غير محدد",
+                    inline: true
+                });
+            });
+
+            const embedColor = TITLES[currentMinistry] ? TITLES[currentMinistry].color : 0xd4af37;
+
+            const embed = {
+                title: `${ministryName} - ${serviceName}`,
+                color: embedColor,
+                fields: fields,
+                timestamp: new Date().toISOString(),
+                footer: { text: `المستخدم: ${currentUsername} | مملكة الميلس - RP` }
+            };
+
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                const uploadedFile = fileInput.files[0];
+                formData.append('files[0]', uploadedFile, uploadedFile.name);
+                embed.image = { url: `attachment://${uploadedFile.name}` };
+            }
+
+            const payload = {
+                username: "」𝗠𝗧𝗦︰",
+                avatar_url: "https://cdn.discordapp.com/icons/1351219866656575629/a_7b2bf1473c186d680f627add5f37e5c1.gif?size=4096",
+                content: `🔔 **[معاملة جديدة واصلة من ${ministryName}]** (بواسطة: ${currentUsername})`,
+                embeds: [embed]
+            };
+
+            formData.append('payload_json', JSON.stringify(payload));
+
+            const targetWebhook = MINISTRY_WEBHOOKS[currentMinistry] || MINISTRY_WEBHOOKS.finance;
+
+            try {
+                const response = await fetch(targetWebhook, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok || response.status === 204) {
+                    document.getElementById('successModal').style.display = 'flex';
+                    form.reset();
+                    const discordField = form.querySelector('.discord-input-auto');
+                    if (discordField) discordField.value = currentDiscordId;
+                    
+                    const prev = form.querySelector('.file-preview');
+                    if (prev) prev.innerHTML = '';
+                } else {
+                    alert('حدث خطأ أثناء الاتصال بالسيرفر، تأكد من الويب هوك.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('عذراً تعذر الاتصال بالسيرفر.');
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
